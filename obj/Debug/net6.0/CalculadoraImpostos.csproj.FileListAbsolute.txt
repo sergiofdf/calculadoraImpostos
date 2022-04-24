@@ -1,0 +1,15 @@
+C:\Users\sergi\source\repos\CalculadoraImpostos\bin\Debug\net6.0\CalculadoraImpostos.exe
+C:\Users\sergi\source\repos\CalculadoraImpostos\bin\Debug\net6.0\CalculadoraImpostos.deps.json
+C:\Users\sergi\source\repos\CalculadoraImpostos\bin\Debug\net6.0\CalculadoraImpostos.runtimeconfig.json
+C:\Users\sergi\source\repos\CalculadoraImpostos\bin\Debug\net6.0\CalculadoraImpostos.dll
+C:\Users\sergi\source\repos\CalculadoraImpostos\bin\Debug\net6.0\CalculadoraImpostos.pdb
+C:\Users\sergi\source\repos\CalculadoraImpostos\obj\Debug\net6.0\CalculadoraImpostos.csproj.AssemblyReference.cache
+C:\Users\sergi\source\repos\CalculadoraImpostos\obj\Debug\net6.0\CalculadoraImpostos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sergi\source\repos\CalculadoraImpostos\obj\Debug\net6.0\CalculadoraImpostos.AssemblyInfoInputs.cache
+C:\Users\sergi\source\repos\CalculadoraImpostos\obj\Debug\net6.0\CalculadoraImpostos.AssemblyInfo.cs
+C:\Users\sergi\source\repos\CalculadoraImpostos\obj\Debug\net6.0\CalculadoraImpostos.csproj.CoreCompileInputs.cache
+C:\Users\sergi\source\repos\CalculadoraImpostos\obj\Debug\net6.0\CalculadoraImpostos.dll
+C:\Users\sergi\source\repos\CalculadoraImpostos\obj\Debug\net6.0\refint\CalculadoraImpostos.dll
+C:\Users\sergi\source\repos\CalculadoraImpostos\obj\Debug\net6.0\CalculadoraImpostos.pdb
+C:\Users\sergi\source\repos\CalculadoraImpostos\obj\Debug\net6.0\CalculadoraImpostos.genruntimeconfig.cache
+C:\Users\sergi\source\repos\CalculadoraImpostos\obj\Debug\net6.0\ref\CalculadoraImpostos.dll
