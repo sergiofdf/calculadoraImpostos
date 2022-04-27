@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CalculadoraImpostos
+﻿namespace CalculadoraImpostos
 {
     public class NotaFiscal
     {
@@ -13,15 +7,15 @@ namespace CalculadoraImpostos
         public int Ano { get; }
         public string CnpjCliente { get; }
         public string NomeCliente { get; }
-        public decimal ValorBruto12Meses { get; } 
+        public decimal ValorBruto12Meses { get; }
         public decimal[] Impostos { get; }
-        
+
 
         public NotaFiscal(decimal valor, string cnpjCliente, string nomeCliente, decimal valor12meses, int mesNota, int anoNota)
         {
             ValorNota = valor;
             Mes = mesNota != 0 ? mesNota : DateTime.Now.Month;
-            Ano = anoNota != 0 ? anoNota : DateTime.Now.Month;
+            Ano = anoNota != 0 ? anoNota : DateTime.Now.Year;
             CnpjCliente = TrataCNPJ.RemoveCaracteres(cnpjCliente);
             NomeCliente = nomeCliente;
             ValorBruto12Meses = valor12meses;
@@ -81,9 +75,9 @@ namespace CalculadoraImpostos
                 return impostos;
 
             }
-        
+
         }
     }
 
-   
+
 }

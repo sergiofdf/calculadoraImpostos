@@ -35,7 +35,7 @@
 
                 bool cnpjValido = false;
                 string CNPJ;
-                
+
 
                 do
                 {
@@ -48,6 +48,7 @@
 
                 string cnpjFormatado = TrataCNPJ.RemoveCaracteres(CNPJ);
                 criaNovoCadastro(cnpjFormatado);
+                menuOpcoesNotas(cnpjFormatado);
                 return cnpjFormatado;
             }
 
@@ -71,9 +72,9 @@
 
             bool verificaCadastroExistente(string cnpjFormatado)
             {
-                foreach(var empresa in todasEmpresas)
+                foreach (var empresa in todasEmpresas)
                 {
-                    if(empresa.CNPJ == cnpjFormatado)
+                    if (empresa.CNPJ == cnpjFormatado)
                     {
                         return true;
                     }
@@ -91,7 +92,7 @@
                 {
                     if (empresa.CNPJ == cnpj)
                     {
-                      nomeEmpresa = empresa.Nome;
+                        nomeEmpresa = empresa.Nome;
                     }
                 }
                 if (nomeEmpresa == null)
@@ -99,7 +100,6 @@
                     throw new Exception("Empresa não encontrada.");
                 }
 
-                Console.Clear();
                 Console.WriteLine($"Escolha ação para a empresa {nomeEmpresa}, CNPJ {cnpj}.\n");
 
                 do
@@ -117,13 +117,13 @@
                     case 1:
                         Console.Clear();
                         EmitirOuCadastrarNota(cnpj);
-                        Console.ReadLine();
+                        Console.WriteLine("\n\n");
                         trataFimPrograma(cnpj);
                         break;
                     case 2:
                         //cadastrar notas anteriores
                         Console.Clear();
-                        
+
                         int mesDigitadoNumber = 0;
                         bool mesValido = false;
                         int anoDigitadoNumber = 0;
@@ -205,16 +205,17 @@
                 Console.WriteLine("Digite o nome do Cliente:");
                 string nomeCliente = Console.ReadLine();
 
-                Console.WriteLine("Deseja emitir a nota? Sim/Nao/sair");
+                Console.WriteLine("Deseja emitir a nota? Sim/Nao/sair/encerrar");
                 string resposta = (Console.ReadLine()).ToLower().Trim();
 
                 if (resposta == "sim")
                 {
+                    Console.Clear();
                     foreach (var empresa in todasEmpresas)
                     {
                         if (empresa.CNPJ == cnpjEmpresa)
                         {
-                            if(mesNota == 0)
+                            if (mesNota == 0)
                             {
                                 decimal[] impostos = empresa.EmitirNota(valorNota, cnpjClienteFormatado, nomeCliente, mesNota, anoNota);
                                 Console.WriteLine($"IRPJ: R${impostos[0].ToString("N2")}");
@@ -229,13 +230,14 @@
                             {
                                 empresa.CadastrarNotasAnteriores(valorNota, cnpjClienteFormatado, nomeCliente, mesNota, anoNota);
                             }
-                            Console.ReadLine();
+                            Console.WriteLine("\n\n");
                             menuOpcoesNotas(cnpjEmpresa);
                         }
                     }
                 }
                 else if (resposta == "sair")
                 {
+                    Console.Clear();
                     menuInicial();
                 }
                 else if (resposta == "encerrar")
@@ -262,10 +264,10 @@
                     if (!escolhaValida)
                     {
                         Console.WriteLine("Digite a opção 1 ou 2.");
-                    }    
+                    }
                 }
 
-                if(escolhaTipoConsulta == 1)
+                if (escolhaTipoConsulta == 1)
                 {
                     bool cnpjValido = false;
                     string cnpjConsultaCliente = "";
@@ -288,8 +290,9 @@
                             notas.AddRange(notas2);
                         }
                     }
-                    if(notas.Count > 0) 
+                    if (notas.Count > 0)
                     {
+                        Console.Clear();
                         Console.WriteLine("Mês de Emissao\t\tValor");
                         foreach (var nota in notas)
                         {
@@ -300,10 +303,10 @@
                     {
                         Console.WriteLine("Cliente não encontrado");
                     }
-                    Console.ReadLine();
+                    Console.WriteLine("\n\n");
                     trataFimPrograma(cnpj);
                 }
-                if(escolhaTipoConsulta == 2)
+                if (escolhaTipoConsulta == 2)
                 {
                     //COnsultar por mês
                     int mesDigitadoNumber = 0;
@@ -355,7 +358,7 @@
                         Console.WriteLine("Não foram encontradas notas para o mês pesquisado.");
                     }
 
-                    Console.ReadLine();
+                    Console.WriteLine("\n\n");
                     trataFimPrograma(cnpj);
                 }
             }
@@ -367,7 +370,7 @@
 
                 while (!escolhaValida)
                 {
-                    Console.Clear();
+                    Console.WriteLine("\n\n");
                     Console.WriteLine("O que deseja fazer?");
                     Console.WriteLine("1 - Voltar ao menu inicial (digitar no CPNJ)");
                     Console.WriteLine("2 - Fazer nova busca ou cadastro de NF");
@@ -388,7 +391,7 @@
             }
 
             string cnpjEmTratamento = menuInicial();
-            menuOpcoesNotas(cnpjEmTratamento);
+
 
 
         }

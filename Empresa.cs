@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CalculadoraImpostos
+﻿namespace CalculadoraImpostos
 {
     public class Empresa
     {
         public string CNPJ { get; }
         public string Nome { get; }
-        public decimal Faturamento12Meses 
+        public decimal Faturamento12Meses
         {
             get
             {
@@ -23,11 +17,11 @@ namespace CalculadoraImpostos
                         total += nf.ValorNota;
                     }
                 }
-                    return total;
-            } 
+                return total;
+            }
         }
 
-        public List<NotaFiscal> listaNotasFiscais = new List<NotaFiscal>(); 
+        public List<NotaFiscal> listaNotasFiscais = new List<NotaFiscal>();
 
         public Empresa(string cnpj, string nome)
         {
@@ -35,7 +29,7 @@ namespace CalculadoraImpostos
             Nome = nome;
         }
 
-        
+
         public decimal[] EmitirNota(decimal valorNota, string cnpjCliente, string nomeCliente, int mesNota, int anoNota)
         {
             var novaNota = new NotaFiscal(valorNota, cnpjCliente, nomeCliente, Faturamento12Meses, mesNota, anoNota);
@@ -45,8 +39,8 @@ namespace CalculadoraImpostos
         }
 
         public void CadastrarNotasAnteriores(decimal valorNota, string cnpjCliente, string nomeCliente, int mesNota, int anoNota)
-        {   
-            if(( mesNota > DateTime.Now.Month && anoNota >= DateTime.Now.Year )|| anoNota > DateTime.Now.Year)
+        {
+            if ((mesNota > DateTime.Now.Month && anoNota >= DateTime.Now.Year) || anoNota > DateTime.Now.Year)
             {
                 Console.WriteLine("Não é possível cadastrar notas com data futura.");
                 return;
@@ -69,7 +63,7 @@ namespace CalculadoraImpostos
                     string valorEmissao = ($"R$ {valorNota.ToString("N2")}");
                     string[] dadosNota = { mesEmissao, valorEmissao };
                     notasPorCliente.Add(dadosNota);
-                    
+
                 }
             }
             return notasPorCliente;
