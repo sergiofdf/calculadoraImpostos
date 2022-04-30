@@ -10,29 +10,6 @@ namespace CalculadoraImpostos
 
             List<Empresa> todasEmpresas = new List<Empresa>();
 
-            //Criando empresas ficticias para teste
-            var novaEmpresa1 = new Empresa("52996093000150", "NomeEmpresa1");
-            var novaEmpresa2 = new Empresa("67672734000198", "NomeEmpresa2");
-            var novaEmpresa3 = new Empresa("83818741000101", "NomeEmpresa3");
-
-            todasEmpresas.Add(novaEmpresa1);
-            todasEmpresas.Add(novaEmpresa2);
-            todasEmpresas.Add(novaEmpresa3);
-
-
-            //Criando Notas ficticias para teste
-            novaEmpresa1.CadastrarNotasAnteriores(500, "65.888.332/0001-08", "Cliente1", 12, 2021);
-            novaEmpresa1.CadastrarNotasAnteriores(1500, "65.888.332/0001-08", "Cliente1", 1, 2022);
-            novaEmpresa1.CadastrarNotasAnteriores(2500, "44.075.893/0001-00", "Cliente2", 10, 2021);
-
-            novaEmpresa2.CadastrarNotasAnteriores(1500, "68.697.138/0001-25", "Cliente3", 8, 2021);
-            novaEmpresa2.CadastrarNotasAnteriores(3500, "65.888.332/0001-08", "Cliente1", 3, 2022);
-            novaEmpresa2.CadastrarNotasAnteriores(10500, "44.075.893/0001-00", "Cliente2", 11, 2021);
-
-            novaEmpresa3.CadastrarNotasAnteriores(240500, "60.524.450/0001-05", "Cliente4", 9, 2021);
-            novaEmpresa3.CadastrarNotasAnteriores(50000, "65.888.332/0001-08", "Cliente1", 1, 2022);
-            novaEmpresa3.CadastrarNotasAnteriores(50000, "44.075.893/0001-00", "Cliente2", 9, 2021);
-
             string menuInicial()
             {
 
@@ -58,12 +35,21 @@ namespace CalculadoraImpostos
 
             void criaNovoCadastro(string cnpjFormatado)
             {
-                string NomeEmpresa;
+                string NomeEmpresa = "";
+                bool nomeValido = false;
                 bool cadastroExistente = verificaCadastroExistente(cnpjFormatado);
                 if (!cadastroExistente)
                 {
                     Console.WriteLine("Digite o nome da Empresa");
-                    NomeEmpresa = Console.ReadLine();
+                    while (!nomeValido)
+                    {
+                        NomeEmpresa = Console.ReadLine();
+                        nomeValido = NomeEmpresa.Length >= 10;
+                        if (!nomeValido)
+                        {
+                            Console.WriteLine("Nome da empresa deve ter pelo menos 10 caracteres.");
+                        }
+                    }
 
                     var novaEmpresa = new Empresa(cnpjFormatado, NomeEmpresa);
 
@@ -113,6 +99,10 @@ namespace CalculadoraImpostos
                     Console.WriteLine("4 - Sair");
                     Console.WriteLine("5 - Encerrar");
                     string opcaoUsuario = Console.ReadLine();
+                    if (opcaoUsuario.ToLower().Trim() == "voltar" || opcaoUsuario.ToLower().Trim() == "cancelar")
+                    {
+                        menuInicial();
+                    }
                     numeroValido = (int.TryParse(opcaoUsuario, out userInputNumber) && userInputNumber > 0 && userInputNumber <= 5);
                 } while (!numeroValido);
                 switch (userInputNumber)
@@ -124,7 +114,8 @@ namespace CalculadoraImpostos
                         trataFimPrograma(cnpj);
                         break;
                     case 2:
-                        //cadastrar notas anteriores
+                    //cadastrar notas anteriores
+                    MesCadastroNota:
                         Console.Clear();
 
                         int mesDigitadoNumber = 0;
@@ -135,6 +126,10 @@ namespace CalculadoraImpostos
                         {
                             Console.WriteLine("Digite o mês da emissao");
                             string mesDigitado = Console.ReadLine();
+                            if (mesDigitado.ToLower().Trim() == "cancelar" || mesDigitado.ToLower().Trim() == "voltar")
+                            {
+                                menuOpcoesNotas(cnpj);
+                            }
                             mesValido = (int.TryParse(mesDigitado, out mesDigitadoNumber) && mesDigitadoNumber > 0 && mesDigitadoNumber <= 12);
                             if (!mesValido)
                             {
@@ -146,6 +141,14 @@ namespace CalculadoraImpostos
                         {
                             Console.WriteLine("Digite o ano da emissao");
                             string anoDigitado = Console.ReadLine();
+                            if (anoDigitado.ToLower().Trim() == "cancelar")
+                            {
+                                menuOpcoesNotas(cnpj);
+                            }
+                            if (anoDigitado.ToLower().Trim() == "voltar")
+                            {
+                                goto MesCadastroNota;
+                            }
                             anoValido = (int.TryParse(anoDigitado, out anoDigitadoNumber) && anoDigitadoNumber > 1999 && anoDigitadoNumber <= DateTime.Now.Year);
                             if (!anoValido)
                             {
@@ -182,13 +185,19 @@ namespace CalculadoraImpostos
                 bool isValidNumber = false;
                 while (!isValidNumber)
                 {
-                    isValidNumber = decimal.TryParse(Console.ReadLine(), out valorNota);
+                    string opcaoUsuario = Console.ReadLine();
+                    if (opcaoUsuario.ToLower().Trim() == "voltar" || opcaoUsuario.ToLower().Trim() == "cancelar")
+                    {
+                        menuOpcoesNotas(cnpjEmpresa);
+                    }
+                    isValidNumber = decimal.TryParse(opcaoUsuario, out valorNota);
                     if (!isValidNumber)
                     {
                         Console.WriteLine("Digite somente números com casas decimais. Utilize ponto para casas decimais.");
                     }
                 }
 
+            EntrarCnpjCliente:
                 Console.WriteLine("Digite o CNPJ do Cliente:");
                 bool cnpjValido = false;
                 string cnpjCliente = "";
@@ -196,6 +205,14 @@ namespace CalculadoraImpostos
                 while (!cnpjValido)
                 {
                     cnpjCliente = Console.ReadLine();
+                    if (cnpjCliente.ToLower().Trim() == "cancelar")
+                    {
+                        menuOpcoesNotas(cnpjEmpresa);
+                    }
+                    if (cnpjCliente.ToLower().Trim() == "voltar")
+                    {
+                        EmitirOuCadastrarNota(cnpjEmpresa);
+                    }
                     cnpjValido = TrataCNPJ.ValidaCNPJ(cnpjCliente);
                     if (!cnpjValido)
                     {
@@ -205,8 +222,17 @@ namespace CalculadoraImpostos
 
                 string cnpjClienteFormatado = TrataCNPJ.RemoveCaracteres(cnpjCliente);
 
+            DigiteNomeCliente:
                 Console.WriteLine("Digite o nome do Cliente:");
                 string nomeCliente = Console.ReadLine();
+                if (nomeCliente.ToLower().Trim() == "cancelar")
+                {
+                    menuOpcoesNotas(cnpjEmpresa);
+                }
+                if (nomeCliente.ToLower().Trim() == "voltar")
+                {
+                    goto EntrarCnpjCliente;
+                }
 
                 Console.WriteLine("Deseja emitir a nota? Sim/Nao/sair/encerrar");
                 string resposta = (Console.ReadLine()).ToLower().Trim();
@@ -247,6 +273,10 @@ namespace CalculadoraImpostos
                 {
                     Environment.Exit(0);
                 }
+                else if (resposta == "voltar")
+                {
+                    goto DigiteNomeCliente;
+                }
                 else
                 {
                     menuOpcoesNotas(cnpjEmpresa);
@@ -263,6 +293,10 @@ namespace CalculadoraImpostos
                     Console.WriteLine("1 - Consultar por Cliente");
                     Console.WriteLine("2 - Consultar por Mes");
                     string escolhaDigitada = Console.ReadLine();
+                    if (escolhaDigitada.ToLower().Trim() == "voltar" || escolhaDigitada.ToLower().Trim() == "cancelar")
+                    {
+                        menuOpcoesNotas(cnpj);
+                    }
                     escolhaValida = (int.TryParse(escolhaDigitada, out escolhaTipoConsulta) && escolhaTipoConsulta > 0 && escolhaTipoConsulta <= 2);
                     if (!escolhaValida)
                     {
@@ -278,6 +312,14 @@ namespace CalculadoraImpostos
                     {
                         Console.WriteLine("Digite o CNPJ do Cliente");
                         cnpjConsultaCliente = Console.ReadLine();
+                        if (cnpjConsultaCliente.ToLower().Trim() == "cancelar")
+                        {
+                            menuOpcoesNotas(cnpj);
+                        }
+                        if (cnpjConsultaCliente.ToLower().Trim() == "voltar")
+                        {
+                            menuConsulta(cnpj);
+                        }
                         cnpjValido = TrataCNPJ.ValidaCNPJ(cnpjConsultaCliente);
                         if (!cnpjValido)
                             Console.WriteLine("CNPJ Inválido. Digite novamente:");
@@ -311,7 +353,8 @@ namespace CalculadoraImpostos
                 }
                 if (escolhaTipoConsulta == 2)
                 {
-                    //COnsultar por mês
+                //COnsultar por mês
+                MesConsulta:
                     int mesDigitadoNumber = 0;
                     bool mesValido = false;
                     int anoDigitadoNumber = 0;
@@ -320,6 +363,14 @@ namespace CalculadoraImpostos
                     {
                         Console.WriteLine("Digite o mês da pesquisa");
                         string mesDigitado = Console.ReadLine();
+                        if (mesDigitado.ToLower().Trim() == "cancelar")
+                        {
+                            menuOpcoesNotas(cnpj);
+                        }
+                        if (mesDigitado.ToLower().Trim() == "voltar")
+                        {
+                            menuConsulta(cnpj);
+                        }
                         mesValido = (int.TryParse(mesDigitado, out mesDigitadoNumber) && mesDigitadoNumber > 0 && mesDigitadoNumber <= 12);
                         if (!mesValido)
                         {
@@ -331,6 +382,14 @@ namespace CalculadoraImpostos
                     {
                         Console.WriteLine("Digite o ano da pesquisa");
                         string anoDigitado = Console.ReadLine();
+                        if (anoDigitado.ToLower().Trim() == "cancelar")
+                        {
+                            menuConsulta(cnpj);
+                        }
+                        if (anoDigitado.ToLower().Trim() == "voltar")
+                        {
+                            goto MesConsulta;
+                        }
                         anoValido = (int.TryParse(anoDigitado, out anoDigitadoNumber) && anoDigitadoNumber > 1999 && anoDigitadoNumber <= DateTime.Now.Year);
                         if (!anoValido)
                         {

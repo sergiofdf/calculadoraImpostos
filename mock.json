@@ -1,0 +1,47 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+  "empresas": [
+    {
+      "cnpj": "52996093000150",
+      "nome": "NomeEmpresa1"
+    },
+    {
+      "cnpj": "67672734000198",
+      "nome": "NomeEmpresa2"
+    },
+    {
+      "cnpj": "83818741000101",
+      "nome": "NomeEmpresa3"
+    }
+  ],
+  "notasAnteriores": [
+    {
+      "valor": 1500,
+      "cnpjCliente": "68.697.138/0001-25",
+      "nomeCliente": "Cliente3",
+      "mes": 8,
+      "ano": 2021
+    },
+    {
+      "valor": 3500,
+      "cnpjCliente": "65.888.332/0001-08",
+      "nomeCliente": "Cliente1",
+      "mes": 3,
+      "ano": 2022
+    },
+    {
+      "valor": 10500,
+      "cnpjCliente": "44.075.893/0001-00",
+      "nomeCliente": "Cliente2",
+      "mes": 11,
+      "ano": 2021
+    }
+  ]
+}

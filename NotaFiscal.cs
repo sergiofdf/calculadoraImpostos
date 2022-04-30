@@ -205,7 +205,7 @@ namespace CalculadoraImpostos
 
             else
             {
-                throw new Exception("Empresa não se enquadra como Microempresa ou Empresa de Pequeno Porte.");
+                throw new Exception("Empresa não se enquadra no Anexo III do Simples Nacional");
             }
 
         }
