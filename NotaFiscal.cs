@@ -1,4 +1,6 @@
-﻿namespace CalculadoraImpostos
+﻿using System;
+
+namespace CalculadoraImpostos
 {
     public class NotaFiscal
     {

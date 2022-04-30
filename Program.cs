@@ -1,4 +1,7 @@
-﻿namespace CalculadoraImpostos
+﻿using System;
+using System.Collections.Generic;
+
+namespace CalculadoraImpostos
 {
     internal class Program
     {
